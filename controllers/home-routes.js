@@ -1,28 +1,43 @@
 const router = require('express').Router();
 const { Post, Comment, User } = require('../models/');
+const sequelize = require('../config/config');
+const withAuth = require('../utils/auth');
 
 // get all posts for homepage
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
   try {
     // we need to get all Posts and include the User for each (change lines 8 and 9)
-    const postData = await SomeModel.someSequelizeMethod({
-      include: [SomeOtherModel],
+    const postData = await Post.findAll({
+      attributes: [
+        'id',
+        'post_title',
+        'post_text',
+        'created_at'
+      ],
+      include: [{
+        model: Comment,
+        attributes: ['id', 'content_text', 'user_id', 'post_id', 'created_at'],
+        include: {
+          model: User,
+          attributes: ['id', 'username']
+        }
+      }],
     });
     // serialize the data
     const posts = postData.map((post) => post.get({ plain: true }));
     // we should render all the posts here
-    res.render('hmmmm what view should we render?', { posts });
+    res.render('all-posts', { posts });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
 // get single post
-router.get('/post/:id', async (req, res) => {
+router.get('/post/:id', withAuth, async (req, res) => {
   try {
     // what should we pass here? we need to get some data passed via the request body (something.something.id?)
     // change the model below, but not the findByPk method.
-    const postData = await SomeModel.findByPk(????, {
+    const postData = await Post.findByPk(req.params.id, {
       // helping you out with the include here, no changes necessary
       include: [
         User,
