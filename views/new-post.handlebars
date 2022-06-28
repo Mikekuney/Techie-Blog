@@ -1,14 +1,16 @@
-<div>
-    <label for="post-title">Title</label>
-    <input type="text" name="post-title">
-</div>
-<div>
-    <label for="post-body">Text</label>
-    <input type="textarea" name="post-body">
-</div>
-<div>
-    <label for="new-post-form">New Post</label>
-    <button type="submit" id="new-post-form" class="btn">New Post</button>
+<div class="card">
+    <div class="card-header">
+        <h2>Create New Post</h2>
+    </div>
+    <form class="card-body" id="new-post-form">
+        <label class="form-label" for="post-title">Title</label>
+        <input class="form-input" type="text" name="post-title"/>
+
+        <label class="form-label" for="post-body">Content</label>
+        <textarea class="form-input" name ="post-body"></textarea>
+        
+        <button type="submit" class="btn">Create</button>
+    </form>
 </div>
 
-<script src="/js/new.js"></script>
+<script src="/js/new.js"></script> 
