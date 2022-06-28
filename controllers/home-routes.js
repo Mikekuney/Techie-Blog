@@ -16,7 +16,7 @@ router.get('/', withAuth, async (req, res) => {
       ],
       include: [{
         model: Comment,
-        attributes: ['id', 'content_text', 'user_id', 'post_id', 'created_at'],
+        attributes: ['id', 'comment_text', 'user_id', 'post_id', 'created_at'],
         include: {
           model: User,
           attributes: ['id', 'username']
@@ -61,11 +61,92 @@ router.get('/post/:id', withAuth, async (req, res) => {
   }
 });
 
+router.get('/new/:id', async (req, res) => {
+  await Post.findOne({
+          where: {
+              id: req.params.id
+          },
+          attributes: [
+              'id',
+              'post_title',
+              'post_text',
+              'created_at'
+          ],
+          include: [{
+                  model: Comment,
+                  attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                  include: {
+                      model: User,
+                      attributes: ['username']
+                  }
+              },
+              {
+                  model: User,
+                  attributes: ['username']
+              }
+          ]
+      })
+      .then(dbPostData => {
+          if (!dbPostData) {
+              res.status(404).json({ message: 'No post found with this id' });
+              return;
+          }
+          const post = dbPostData.get({ plain: true });
+          console.log(post);
+          res.render('single-post', { post, loggedIn: req.session.loggedIn });
+
+
+      })
+      .catch(err => {
+          console.log(err);
+          res.status(500).json(err);
+      });
+});
+router.get('/new/:id', async (req, res) => {
+  await Post.findOne({
+    where: {
+        id: req.params.id
+    },
+    attributes: [
+        'id',
+        'post_title',
+        'post_text',
+        'created_at'
+    ],
+    include: [{
+            model: Comment,
+            attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+            include: {
+                model: User,
+                attributes: ['username']
+            }
+        },
+        {
+            model: User,
+            attributes: ['username']
+        }
+    ]
+  })
+  .then(dbPostData => {
+    if (!dbPostData) {
+        res.status(404).json({ message: 'No post found with this id' });
+        return;
+    }
+    const post = dbPostData.get({ plain: true });
+
+    res.render('new-post', { post, loggedIn: req.session.loggedIn });
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
+});
+
 // giving you the login and signup route pieces below, no changes needed.
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {
     res.redirect('/');
-    return;
+    return true;
   }
 
   res.render('login');
@@ -74,7 +155,7 @@ router.get('/login', (req, res) => {
 router.get('/signup', (req, res) => {
   if (req.session.loggedIn) {
     res.redirect('/');
-    return;
+    return true;
   }
 
   res.render('signup');
