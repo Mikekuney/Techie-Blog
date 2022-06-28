@@ -11,21 +11,13 @@ Post.init(
             primaryKey: true,
             autoIncrement: true
         },
-        post_title: {
+        title: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        post_text: {
-            type: DataTypes.STRING,
+        body: {
+            type: DataTypes.TEXT,
             allowNull: false
-        },
-        created_at: {
-            type: DataTypes.DATE,
-            allowNull: true,
-        },
-        updated_at: {
-            type: DataTypes.DATE,
-            allowNull: true,
         },
         user_id: {
             type: DataTypes.INTEGER,
@@ -38,11 +30,10 @@ Post.init(
     },
     {
         sequelize,
-        timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: 'Post',
+        modelName: 'post',
     }
 );
 
-module.exports = Post
+module.exports = Post;
