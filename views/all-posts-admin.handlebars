@@ -1,0 +1,9 @@
+<!--Shows all posts -->
+<div class="posts list-group">
+  {{#each posts}}
+  <a href="/dashboard/edit/{{id}}" class="list-item flew-row justify-space-between">
+    <span>{{title}}</span>
+    <span>{{format_date createdAt}}</span>
+  </a>
+  {{/each}}
+</div>
