@@ -1,19 +1,53 @@
-{{> post-info post}}
-
-{{#if loggedIn}}
-<form class="comment-form">
-  <div>
-    <textarea name="comment-body"></textarea>
+<article class ="post">
+  <div class ="card">
+    <div class ="card-header flex-row justify-space-between">
+      <h2>{{post.title}}</h2>
+      <div>
+        <p>Posted by: {{post.user.username}} on {{format_date post.createdAt }}</p>
+      </div>
+    </div>
+    <div class ="card-body">
+      {{post.body}}
+    </div>
   </div>
+</article>
 
-  <div>
-    <button type="submit">add comment</button>
+<div class="card">
+  <div class="card-header">
+    <h3>Comments</h3>
+  </div>
+  <section class="card-body">
+    <div class="comments">
+      {{#each post.comments}}
+      <section class="comment">
+        <div class="meta">
+          {{user.username}} on {{format_date createdAt}}
+        </div>
+        <div class="text">
+          {{body}}
+        </div>
+      </section>
+      {{/each}}
+    </div>
+  </section>
+</div>
+
+<!--Add new comment -->
+{{#if loggedIn}}
+<form id ="new-comment-form" class="card">
+  <div class="card-header">
+    <h3>Add New Comment</h3>
+  </div>
+  <div class="card-body">
+    <input type="hidden" name="post-id" value="{{post.id}}" />
+
+    <label class="form-label" for="comment-body">Comment</label>
+    <textarea name="comment-body" class="form-input"></textarea>
+
+    <button type="submit" class="btn">submit</button>
   </div>
 </form>
+
 {{/if}}
 
-{{> comments post.comments}}
-
-{{#if loggedIn}}
-<script src="/js/comment.js"></script>
-{{/if}}
+<script src="/js/comment.js"></script> 
