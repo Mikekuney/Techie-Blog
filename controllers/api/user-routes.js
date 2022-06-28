@@ -2,65 +2,64 @@ const router = require('express').Router();
 const { User, Post, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-router.get('/', withAuth, async (req, res) => {
-  await User.findAll({
-    attributes: {exclude: ['[password]']}
-  })
-  .then(userData => res.json(userData))
-  .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
-  })
-})
+// router.get('/', withAuth, async (req, res) => {
+//   await User.findAll({
+//     attributes: {exclude: ['[password]']}
+//   })
+//   .then(userData => res.json(userData))
+//   .catch(err => {
+//     console.log(err);
+//     res.status(500).json(err);
+//   })
+// })
 
-router.get('/:id', withAuth, async (req, res) => {
-  await User.findOne({
-    attributes: { exclude: ['password'] },
-    where: {
-        id: req.params.id
-    },
-    include: [{
-            model: Post,
-            attributes: [
-                'id',
-                'post-title',
-                'post_text',
-                'created_at'
-            ]
-        },
+// router.get('/:id', withAuth, async (req, res) => {
+//   await User.findOne({
+//     attributes: { exclude: ['password'] },
+//     where: {
+//         id: req.params.id
+//     },
+//     include: [{
+//             model: Post,
+//             attributes: [
+//                 'id',
+//                 'post-title',
+//                 'post_text',
+//                 'created_at'
+//             ]
+//         },
 
-        {
-            model: Comment,
-            attributes: ['id', 'comment_text', 'created_at'],
-            include: {
-                model: Post,
-                attributes: ['post_title']
-            }
-        },
-        {
-            model: Post,
-            attributes: ['post_title'],
-        }
-    ]
-  })
-  .then(dbUserData => {
-    if (!dbUserData) {
-        res.status(404).json({ message: 'User with this ID not found' });
-        return;
-    }
-    res.json(dbUserData);
-  })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
-  });
-});
+//         {
+//             model: Comment,
+//             attributes: ['id', 'comment_text', 'created_at'],
+//             include: {
+//                 model: Post,
+//                 attributes: ['post_title']
+//             }
+//         },
+//         {
+//             model: Post,
+//             attributes: ['post_title'],
+//         }
+//     ]
+//   })
+//   .then(dbUserData => {
+//     if (!dbUserData) {
+//         res.status(404).json({ message: 'User with this ID not found' });
+//         return;
+//     }
+//     res.json(dbUserData);
+//   })
+//   .catch(err => {
+//     console.log(err);
+//     res.status(500).json(err);
+//   });
+// });
 
 router.post('/', async (req, res) => {
   try {
     const newUser = await User.create({
       username: req.body.username,
-      email: req.body.email,
       password: req.body.password,
     });
 
@@ -80,7 +79,7 @@ router.post('/login', async (req, res) => {
   try {
     const user = await User.findOne({
       where: {
-        email: req.body.email,
+        username: req.body.username,
       },
     });
 
