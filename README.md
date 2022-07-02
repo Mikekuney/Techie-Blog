@@ -12,8 +12,8 @@ THis is a CMS- style blog that allows develops and users to publish their own bl
 - The user will be able to have the option to update or delete their post and the page will be refreshed.
 
 ## **Video**
-
-
+https://vast-inlet-70265.herokuapp.com/
+https://github.com/Mikekuney/Techie-Blog
 
 ## **Table of Contents**
 <a href="#installation">Installation</a> 
