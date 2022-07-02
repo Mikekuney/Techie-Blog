@@ -3,7 +3,13 @@
 ![License: Unlicensed](https://img.shields.io/badge/License-Unlicensed-blue.svg)
 
 ## **Purpose**
+THis is a CMS- style blog that allows develops and users to publish their own blogs and comments about various post as well as let the user/developer to blog/comment on other developer's posts. 
 
+## **Description**
+- This is a CMS- style blog. When the user visits the site for the first time they will be presented with the homepage that will display already existing blog posts.
+- They will be prompted to sign up or sign in. After signing up the user credentials will be stored in a database.
+- Each of the users posts will be presented with a post title, content, post creator's name, a date created and the option to leave a comment.
+- The user will be able to have the option to update or delete their post and the page will be refreshed.
 
 ## **Video**
 
@@ -26,12 +32,14 @@
 
 
 ## <h2 id="installation">**Installation**</h2>
-
-
+- Clone the repository from [GitHub]
+- Run the following command: `npm install`
+- Run the following command: `npm start`
+- Open the browser and navigate to http://localhost:3001/
 
 ## <h2 id="usage">**Usage**</h2>
 
-Once the server is running, go in your browser and go to http://localhost:3001/
+
 
 ## <h2 id="userLicense">**License**</h2>
 ### <em>NOTICE</em>:
@@ -44,7 +52,7 @@ http://unlicense.org/
 Mike Kuney
 
 ## <h2 id="technologies">**Technologies Used**</h2>
-HTML, JavaScript, CSS, Node.js, Express.js, Sequelize, MongoDB, Mongoose, Morgan, lite-server, Compression
+HTML, JavaScript, CSS, Node.js, Express.js, Sequelize, Handlebars, Express session, Bcrypt
 ## <h2 id="tests">**Tests**</h2>
 
 

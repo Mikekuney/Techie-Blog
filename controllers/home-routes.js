@@ -35,7 +35,7 @@ router.get('/post/:id', async (req, res) => {
       // serialize the data
       const post = postData.get({ plain: true });
       // which view should we render for a single-post?
-      res.render('single-post', { post, loggedIn: req.session.loggedIn });
+      res.render('single-post', { post, loggedIn:req.session.loggedIn });
     } else {
       res.status(404).end();
     }
@@ -48,7 +48,7 @@ router.get('/post/:id', async (req, res) => {
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {
     res.redirect('/');
-    return true;
+    return;
   }
 
   res.render('login');
@@ -57,7 +57,7 @@ router.get('/login', (req, res) => {
 router.get('/signup', (req, res) => {
   if (req.session.loggedIn) {
     res.redirect('/');
-    return true;
+    return;
   }
 
   res.render('signup');
